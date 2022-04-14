@@ -49,3 +49,6 @@ while True:
         command.append(n)
 
     count = int
+
+#죄소앟ㅂ니다.
+# 머리가 더 안돌아가오ㅛ
