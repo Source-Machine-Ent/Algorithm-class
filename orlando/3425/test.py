@@ -27,28 +27,102 @@ import sys
 from collections import deque
 
 def calculate(cmd, num):
-    if "NUM" in cmd:
-        stack.append(num)
-        return num
-    elif not stack:
-        return "ERROR"
-    elif cmd == "POP":
-        stack.pop()
+    MV = 10**9
+
+    stack = deque([num])
+    
+    for i in cmd:
+
+        if "NUM" in i:
+            tmp = list(i.split())
+            stack.append(int(tmp[-1]))
+
+        elif not stack:
+            return "ERROR"
+
+        elif i == "POP":
+            stack.pop()
+
+        elif i == "INV":
+            stack[-1] = -stack[-1]
+
+        elif i == "DUP":
+            stack.append(stack[-1])
+
+        elif i == "SWP":
+            stack[-1], stack[-2] = stack[-2], stack[-1]
+
+        elif i == "ADD":
+            tmp = stack.pop() + stack.pop()
+            if tmp > MV:
+                return "ERROR"
+            stack.append(tmp)
+
+        elif i == "SUB":
+            tmp = -stack.pop() + stack.pop()
+            if abs(tmp) > MV:
+                return "ERROR"
+            stack.append(tmp)
+
+        elif i == "MUL":
+            tmp = stack.pop() * stack.pop()
+            if tmp > MV:
+                return "ERROR"
+            stack.append(tmp)
+
+        elif i == "DIV":
+            n = stack.pop()
+            m = stack.pop()
+
+            if n == 0:
+                return "ERROR"
+
+            tmp = abs(m) // abs(n)
+
+            if (n>0 and m<0) or (n<0 and m>0):
+                tmp  = -tmp
+
+            if abs(tmp) > MV:
+                return "ERROR"
+            stack.append(tmp)
+
+        elif i == "MOD":
+            n = stack.pop()
+            m = stack.pop()
+
+            if n == 0:
+                return "ERROR"
+
+            tmp = abs(m) % abs(n)
+
+            if (n < 0 or m < 0):
+                tmp  = -tmp
+
+            if abs(tmp) > MV:
+                return "ERROR"
+    
+            stack.append(tmp)
+
+    if len(stack) == 1:
+        return stack[-1]
+    return "ERROR"
 
 
 while True:
     command = []
-
-    stack = deque()
+    
     while True:
         n = sys.stdin.readline().rstrip()
         if n == 'END':
             break
         if n == 'QUIT':
             quit()
+            
         command.append(n)
 
-    count = int
+    for _ in range(int(sys.stdin.readline())):
+        tmp = int(sys.stdin.readline())
+        print(calculate(command, tmp))
 
-#죄소앟ㅂ니다.
-# 머리가 더 안돌아가오ㅛ
+    print()
+    input()
