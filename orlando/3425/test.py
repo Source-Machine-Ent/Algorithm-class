@@ -48,6 +48,9 @@ def calculate(cmd, num):
 
         elif i == "DUP":
             stack.append(stack[-1])
+            
+        elif len(stack) ==1:
+            return "ERROR"
 
         elif i == "SWP":
             stack[-1], stack[-2] = stack[-2], stack[-1]
@@ -95,13 +98,15 @@ def calculate(cmd, num):
 
             tmp = abs(m) % abs(n)
 
-            if (n < 0 or m < 0):
+            if (m < 0):
                 tmp  = -tmp
 
             if abs(tmp) > MV:
                 return "ERROR"
     
             stack.append(tmp)
+        else:
+            return "ERROR"
 
     if len(stack) == 1:
         return stack[-1]
@@ -113,11 +118,11 @@ while True:
     
     while True:
         n = sys.stdin.readline().rstrip()
-        if n == 'END':
-            break
         if n == 'QUIT':
             quit()
-            
+        if n == 'END':
+            break
+        
         command.append(n)
 
     for _ in range(int(sys.stdin.readline())):
