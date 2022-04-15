@@ -1,5 +1,5 @@
 // 220414 3425 고스택
-package wonyoung;
+package wonyoung.algorithm_basic;
 
 import java.io.*;
 import java.util.*;
