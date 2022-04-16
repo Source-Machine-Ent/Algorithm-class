@@ -1,6 +1,6 @@
 // 220416 분수 합
 
-package wonyoung.number;
+package wonyoung.numbers;
 
 import java.io.*;
 import java.util.*;
