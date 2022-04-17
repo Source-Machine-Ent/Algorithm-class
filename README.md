@@ -120,5 +120,3 @@
   | [15664 N과 M (10)](https://www.acmicpc.net/problem/15664) | [11657 타임머신](https://www.acmicpc.net/problem/11657) | [2449 전구](https://www.acmicpc.net/problem/2449) | [15686 치킨 배달](https://www.acmicpc.net/problem/15686) | [1655 가운데를 말해요](https://www.acmicpc.net/problem/1655) | [10610 30](https://www.acmicpc.net/problem/10610) |  |
 
 </details>
-
-<img src="/schedule.png" width="100%" />
