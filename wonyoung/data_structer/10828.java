@@ -18,7 +18,7 @@ class Main {
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine(), " ", false);
-            
+
             // recognize command
             String cmd = st.nextToken();
             if (cmd.equals("push")) {
