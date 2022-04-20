@@ -1,29 +1,30 @@
 fun main() {
     val (n, m) = readLine()?.split(' ')?.map { it.toInt() } ?: return
-    // (before -> List<after>)
-    val referenceMap = mutableMapOf<Int, MutableSet<Int>>()
-    // (after -> n(before))
-    val referenceCountMap = mutableMapOf<Int, Int>()
-    repeat(n) {
-        referenceMap[it + 1] = mutableSetOf()
-        referenceCountMap[it + 1] = 0
-    }
+    val outSetList = Array(n + 1) { mutableSetOf<Int>() }
+    val inList = Array(n + 1) { 0 }
 
     repeat(m) {
         val (before, after) = readLine()?.split(' ')?.map { it.toInt() } ?: return
-        referenceMap[before]!!.add(after)
-        referenceCountMap[after] = referenceCountMap[after]?.plus(1) ?: 1
+        outSetList[before].add(after)
+        inList[after]++
     }
 
     val result = mutableListOf<Int>()
-    while (referenceCountMap.isNotEmpty()) {
-        val nodes = referenceCountMap.filterValues { it == 0 }
-        for (node in nodes.keys) {
-            result.add(node)
-            for (next in referenceMap[node] ?: listOf()) {
-                referenceCountMap[next] = referenceCountMap[next]!! - 1
+    val queue = Array(n) { 0 }
+    var nextIn = 0
+    var nextOut = 0
+
+    inList.forEachIndexed { index, count ->
+        if (index > 0 && count == 0) queue[nextIn++] = index
+    }
+
+    while (result.size < n) {
+        val node = queue[nextOut++]
+        result.add(node)
+        for (next in outSetList[node]) {
+            if (--inList[next] == 0) {
+                queue[nextIn++] = next
             }
-            referenceCountMap.remove(node)
         }
     }
     println(result.joinToString(" "))
