@@ -80,11 +80,9 @@ while True:
     for _ in range(n):
         num = int(input())
         print(run(command, num))
-    
+    ß
     print()
     input()
 
 
-
-    import sys
 
