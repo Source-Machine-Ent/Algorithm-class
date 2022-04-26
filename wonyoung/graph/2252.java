@@ -1,9 +1,9 @@
 // 220419 2252 줄세우기
+package wonyoung.graph;
 
 import java.io.*;
 import java.util.*;
-
-public class Main {
+class Main {
     static int N, M;
     static int[] indegree;
     static ArrayList<ArrayList<Integer>> edges = new ArrayList<>();
