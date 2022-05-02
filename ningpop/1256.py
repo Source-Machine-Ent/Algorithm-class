@@ -1,27 +1,38 @@
 # 2022.05.02
-# 풀이 시간 62분 21초
-# 채점 결과: 시간 초과
-# 시간복잡도: 
+# 풀이 시간 102분 37초
+# 채점 결과: 시간 초과 -> 정답
+# 시간복잡도: O(N*M*logN)
 # 문제 링크: https://www.acmicpc.net/problem/1256
 
 import sys
-from itertools import permutations
 
 input = sys.stdin.readline
 
-def get_count(n: int, m: int):
-    if n == 0 and m == 0:
-        return 0
-    elif n == 0 or m == 0:
-        return 1
-    return get_count(n - 1, m) + get_count(n, m - 1)
-
 n, m, k = map(int, input().split())
 
-characters = ['a'] * n + ['z'] * m
+word_count = [ [1] * (m + 1) for _ in range(n + 1) ]
+word_count[0][0] = 0
 
-if get_count(n, m) < k:
+for i in range(1, n + 1):
+    for j in range(1, m + 1):
+        word_count[i][j] = word_count[i][j - 1] + word_count[i - 1][j]
+
+if word_count[n][m] < k:
     print(-1)
 else:
-    result = sorted(list(set(permutations(characters, n + m))))
-    print(''.join(result[k - 1]))
+    result = ''
+    while True:
+        if n == 0 or m == 0:
+            result += 'a'*n
+            result += 'z'*m
+            break
+        a_selected = word_count[n - 1][m]
+
+        if k <= a_selected:
+            result += 'a'
+            n -= 1
+        else:
+            result += 'z'
+            m -= 1
+            k -= a_selected
+    print(result)
