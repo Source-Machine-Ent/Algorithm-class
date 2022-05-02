@@ -11,3 +11,14 @@ input = sys.stdin.readline
 t = int(input())
 for _ in range(t):
     k, c = map(int, input().split())
+    possible = False
+    people = 0
+    for i in range(int(1e9)):
+        if (k * i + 1) % c == 0:
+            possible = True
+            people = i
+            break
+    if possible:
+        print((k * people + 1) // c)
+    else:
+        print('IMPOSSIBLE')
