@@ -1,35 +1,46 @@
-var result = "-1"
-var current = 0
-var end = -1
-var size = -1
-var target = -1
-
 fun main() {
     val (n, m, k) = readLine()?.split(' ')?.map { it.toInt() } ?: return
-    val array = Array(n + m) { false }
-    end = n
-    size = n + m - 1
-    target = k
+    val array = Array(n + 1) { Array(m + 1) { 1L } }
 
-    backtracking1256(array, 0, 0)
-
-    println(result)
-}
-
-
-fun backtracking1256(array: Array<Boolean>, start: Int, count: Int) {
-    if (count == end) {
-        if (current++ == target - 1) {
-            result = array.joinToString("") { if (it) "a" else "z" }
+    (1..n).forEach { a ->
+        (1..m).forEach { z ->
+            // K <= 1000000000 이므로. 안하면 오버플로우 발생.
+            array[a][z] = minOf(array[a-1][z] + array[a][z-1], 1000000001)
         }
-        return
     }
 
-    (start..size).forEach { i ->
-        if (!array[i]) {
-            array[i] = true
-            backtracking1256(array, i + 1, count+1)
-            array[i] = false
+    if (array[n][m] < k) {
+        println(-1)
+    } else {
+        var a = n
+        var z = m
+        var less = k.toLong()
+
+        var result = ""
+        while (true) {
+            if (a == 0) {
+                repeat(z) {
+                    result += "z"
+                }
+                break
+            } else if (z == 0) {
+                repeat(a) {
+                    result += "a"
+                }
+                break
+            }
+
+            // array[a-1][z] : a로 시작하는 문자열의 개수
+            if (less <= array[a-1][z]) {
+                result += "a"
+                a -= 1
+            } else {
+                less -= array[a-1][z]
+                result += "z"
+                z -= 1
+            }
         }
+
+        println(result)
     }
 }
