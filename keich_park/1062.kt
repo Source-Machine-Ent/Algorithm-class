@@ -1,7 +1,7 @@
-var n = 0
-var k = 0
-var wordList = emptyList<Set<Char>>()
-var maxCount = 0
+private var n = 0
+private var k = 0
+private var wordList = emptyList<Set<Char>>()
+private var maxCount = 0
 
 fun main() {
     val (_n, _k) = readLine()?.split(' ')?.map { it.toInt() } ?: return
