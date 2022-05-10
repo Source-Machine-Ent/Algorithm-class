@@ -1,29 +1,26 @@
-private lateinit var smallerThan: Array<MutableSet<Int>>
-private lateinit var biggerThan: Array<MutableSet<Int>>
-
 fun main() {
     val (n, m) = readLine()?.split(' ')?.map { it.toInt() } ?: return
 
-    biggerThan = Array(n) { mutableSetOf<Int>() }
-    smallerThan = Array(n) { mutableSetOf<Int>() }
+    val edges = Array(n) { Array(n) { false } }
+
     repeat(m) {
-        val (small, big) = readLine()?.split(' ')?.map { it.toInt() } ?: return
-        smallerThan[small - 1].add(big - 1)
-        biggerThan[big - 1].add(small - 1)
+        val (small, tall) = readLine()?.split(' ')?.map { it.toInt() } ?: return
+        edges[small - 1][tall - 1] = true
     }
 
-    val result = (0 until n).count {
-        val smaller = getSmaller(it)
-        val bigger = getBigger(it)
-        smaller.size + bigger.size + 1 == n
+    (0 until n).forEach { k ->
+        (0 until n).forEach { i ->
+            (0 until n).forEach { j ->
+                if (edges[i][k] && edges[k][j])
+                    edges[i][j] = true
+            }
+        }
+    }
+
+    val result = (0 until n).count { i ->
+        (0 until n).count { j ->
+            edges[i][j] || edges[j][i]
+        } == n - 1
     }
     println(result)
-}
-
-private fun getSmaller(i: Int): Set<Int> {
-    return smallerThan[i].fold(setOf()) { acc, n -> acc + getSmaller(n) + n }
-}
-
-private fun getBigger(i: Int): Set<Int> {
-    return biggerThan[i].fold(setOf()) { acc, n -> acc + getBigger(n) + n }
 }
