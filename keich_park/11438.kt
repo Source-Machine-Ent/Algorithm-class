@@ -43,7 +43,7 @@ fun main() {
     writer.close()
 }
 
-fun dfs(
+private fun dfs(
     x: Int,
     depth: Int
 ) {
