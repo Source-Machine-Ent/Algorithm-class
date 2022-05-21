@@ -1,21 +1,22 @@
-private lateinit var numbers: List<Int>
-private var lastNumber: Int = 0
-
 fun main() {
     val n = readLine()?.toInt() ?: return
-    val inputs = readLine()?.split(' ')?.map { it.toInt() } ?: return
+    val numbers = readLine()?.split(' ')?.map { it.toInt() } ?: return
 
-    lastNumber = inputs.last()
-    numbers = inputs.subList(0, inputs.size - 1)
+    val array = Array(n) { Array(21) { 0L } }
+    array[0][numbers[0]] = 1
 
-    println(dfs(0, 0))
-}
-
-private fun dfs(i: Int, result: Int): Int {
-    if (result < 0 || result > 20) return 0
-    if (i == numbers.size) {
-        return if (result == lastNumber) 1 else 0
+    (1..n-2).forEach { i ->
+        (0..20).forEach { j ->
+            if (array[i - 1][j] > 0) {
+                if (j + numbers[i] <= 20) {
+                    array[i][j + numbers[i]] += array[i-1][j]
+                }
+                if (j - numbers[i] >= 0) {
+                    array[i][j - numbers[i]] += array[i-1][j]
+                }
+            }
+        }
     }
 
-    return dfs(i + 1, result + numbers[i]) + dfs(i + 1, result - numbers[i])
+    println(array[n-2][numbers[n-1]])
 }
