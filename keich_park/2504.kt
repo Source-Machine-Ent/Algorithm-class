@@ -59,7 +59,7 @@ private fun dfs(node: Node): Int {
     }
 }
 
-data class Node(
+private data class Node(
     val type: Type,
     val children: MutableList<Node> = mutableListOf()
 ) {
