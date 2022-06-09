@@ -19,6 +19,9 @@ ABRA, RAC, D, ACADABRA, ABRACADABRA, 빈 문자열 등이다.
 
 출력
 첫째 줄에 두 문자열에 모두 포함 된 부분 문자열 중 가장 긴 것의 길이를 출력한다.
+
+ABRACADABRA
+ECADADABRBCRDARA45
 '''
 
 import sys
@@ -35,5 +38,6 @@ for i in range(1, len(n1) + 1):
         if(n1[i-1] == n2[j-1]):
             dp[i][j] = dp[i-1][j-1] + 1
             result = max(dp[i][j], result)
+        print(dp)
 
 print(result)
