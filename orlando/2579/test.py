@@ -23,20 +23,29 @@ from sys import stdin
 
 input = stdin.readline
 
+
+
+def gcd(x, y):
+    if y == 0:
+        return x
+    return gcd(y, x % y)
+
+dp = [ 0 for _ in range(1001)]
+
+dp[1] = 3
+
+for i in range(2, 1001):
+    cnt = 0
+    for j in range(1, i+1):
+        if i==j:
+            continue
+        if gcd(i, j) == 1:
+            cnt += 2
+    dp[i] = dp[i-1] + cnt
+
+
 c = int(input())
 
-arr = []
-
 for _ in range(c):
-    arr.append(int(input()))
-
-for i in arr:
-    result = [1, i+1]
-    mid = (i+1)//2
-    mid2 = i-1
-    for j in range(i-1):
-        if j % 2==0:
-            result.append(mid)
-        else:
-            result.append(mid2)
-    print(sum(result))
+    n = int(input())
+    print(dp[n])
