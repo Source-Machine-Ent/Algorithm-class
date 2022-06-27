@@ -22,7 +22,6 @@ C = 0인 경우는 순간 이동을 하는 경우, C < 0인 경우는 타임머�
 2 3 -1
 3 1 -2
 '''
-from math import dist
 from sys import stdin
 input = stdin.readline
 
@@ -37,16 +36,17 @@ dis = [INF] * (n + 1)
 def belman_ford(start):
     # 시작 노드 0으로 초기화
     dis[start] = 0 
+    # 정점 수 만큼 반복
     for i in range(n):
-        for j in range(m):
-            print(*arr[j])
-            print("--------")
-            node = arr[j][0]
-            next_node = arr[j][1]
-            cost = arr[j][2]
+        for j in range(m): #-> 반복마다 모든 간선을 확인한다.
+            node = arr[j][0] #-> 시작 노드
+            next_node = arr[j][1] #-> 목표 노드
+            cost = arr[j][2] #-> 목표 노드로 가는 비용
 
+            # 갈수 있는 노드이며/ 현재 노드를 통해 가는 비용이 더 작을 경우
             if dis[node] != INF and dis[next_node] > dis[node] + cost:
                 dis[next_node] = dis[node] + cost
+                # n번째 라운드에서도 값이 갱신된다면 음수가 존재하는 것
                 if i == n-1:
                     return True
     return False
@@ -56,9 +56,9 @@ negative_cycle = belman_ford(1)
 if negative_cycle:
     print(-1)
 else:
-    for i in range(2, n+1):
-        if dis[i] == True:
+    for i in range(2, n+1): #-> 1번 노드를 제외한 다른 모든 노드를 가기위한 최단 거리 출력
+        if dis[i] == True: #-> 도달 불가능 할 경우
             print(-1)
         else:
-            print(dis[i])
+            print(dis[i]) #-> 거리 출력
 
